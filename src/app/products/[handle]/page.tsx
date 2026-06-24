@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getProductByHandle } from "@/lib/shopify";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductForm from "@/components/product/ProductForm";
+import RelatedProducts from "@/components/product/RelatedProducts";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <h1>{product.title}</h1>
       <ProductGallery images={product.images} title={product.title} />
       <ProductForm product={product} />
+      <RelatedProducts productId={product.id} />
     </div>
   );
 }

@@ -37,8 +37,6 @@ export const PRODUCT_VARIANT_FRAGMENT = /* GraphQL */ `
       ...ImageFragment
     }
   }
-  ${MONEY_FRAGMENT}
-  ${IMAGE_FRAGMENT}
 `;
 
 export const PRODUCT_CARD_FRAGMENT = /* GraphQL */ `

@@ -27,9 +27,17 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { handle } = await params;
-  const product = await getProductByHandle(handle);
 
-  if (!product) notFound();
+  let product;
+  try {
+    product = await getProductByHandle(handle);
+  } catch (e) {
+    return <div className="pt-32 pb-24 container-px"><p>Product fetch error: {e instanceof Error ? e.message : String(e)}</p></div>;
+  }
+
+  if (!product) {
+    return <div className="pt-32 pb-24 container-px"><p>Product not found for handle: {handle}</p></div>;
+  }
 
   return (
     <div className="pt-32 pb-24">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductByHandle } from "@/lib/shopify";
+import ProductGallery from "@/components/product/ProductGallery";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +25,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="pt-32 pb-24 container-px">
       <h1>{product.title}</h1>
-      <p>{product.description}</p>
+      <ProductGallery images={product.images} title={product.title} />
     </div>
   );
 }

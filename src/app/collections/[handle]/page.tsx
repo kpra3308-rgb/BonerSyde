@@ -26,19 +26,20 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
 export default async function CollectionPage({ params, searchParams }: CollectionPageProps) {
   const { handle } = await params;
   const { sort } = await searchParams;
-  const { sortKey, reverse } = mapSortToShopify(sort ?? null);
+  const mapped = mapSortToShopify(sort ?? null);
+  const sortKey = mapped.sortKey === "CREATED_AT" ? "CREATED" : mapped.sortKey;
 
   const { collection, hasNextPage, endCursor } = await getCollectionByHandle(handle, {
     first: 24,
     sortKey,
-    reverse,
+    reverse: mapped.reverse,
   });
 
   if (!collection) notFound();
 
   const filters = {
     collectionHandle: handle,
-    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE" | "TITLE",
+    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED" | "PRICE" | "TITLE",
     reverse,
   };
 

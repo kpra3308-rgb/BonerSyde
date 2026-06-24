@@ -158,7 +158,6 @@ export function getMockProductByHandle(handle: string): Product | null {
         id: `${found.id}-variant`,
         title: "Default",
         availableForSale: true,
-        quantityAvailable: 10,
         selectedOptions: [{ name: "Size", value: "M" }, { name: "Color", value: "Black" }],
         price: found.priceRange.minVariantPrice,
         compareAtPrice: null,

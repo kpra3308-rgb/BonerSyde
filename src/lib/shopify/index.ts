@@ -160,7 +160,7 @@ function reshapeProduct(node: RawProductNode): Product {
     images: node.images?.nodes ?? [],
     options: node.options ?? [],
     variants: node.variants?.nodes ?? [],
-    totalInventory: node.totalInventory ?? null,
+    totalInventory: null,
     createdAt: node.createdAt,
     updatedAt: node.updatedAt,
   };
@@ -207,12 +207,8 @@ function reshapeCart(node: RawCartNode): Cart {
 export async function getProducts(
   filters: ProductFilters & { first?: number } = {}
 ): Promise<{ products: ProductCardData[]; hasNextPage: boolean; endCursor: string | null }> {
-  if (!isShopifyConfigured) {
-    console.log("[shopify] Shopify not configured, using mock data");
-    return getMockProducts(filters);
-  }
-  console.log("[shopify] Shopify configured, calling API for products");
-  const { first = 24, after = null, sortKey = "CREATED", reverse = true, query, collectionHandle } = filters;
+  if (!isShopifyConfigured) return getMockProducts(filters);
+  const { first = 24, after = null, sortKey = "CREATED_AT", reverse = true, query, collectionHandle } = filters;
 
   let searchQuery = query ?? "";
   if (collectionHandle) {
@@ -301,7 +297,7 @@ export async function getCollectionByHandle(
   options: { first?: number; after?: string | null; sortKey?: string; reverse?: boolean } = {}
 ): Promise<{ collection: CollectionWithProducts | null; hasNextPage: boolean; endCursor: string | null }> {
   if (!isShopifyConfigured) return getMockCollectionByHandle(handle, options);
-  const { first = 24, after = null, sortKey = "CREATED", reverse = true } = options;
+  const { first = 24, after = null, sortKey = "CREATED_AT", reverse = true } = options;
   try {
     const data = await shopifyFetch<{ collection: RawCollectionWithProductsNode | null }>({
       query: GET_COLLECTION_BY_HANDLE_QUERY,

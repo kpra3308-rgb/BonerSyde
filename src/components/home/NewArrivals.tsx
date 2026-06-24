@@ -4,7 +4,7 @@ import ProductCard from "@/components/product/ProductCard";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
 export default async function NewArrivals() {
-  const { products } = await getProducts({ first: 8, sortKey: "CREATED", reverse: true });
+  const { products } = await getProducts({ first: 8, sortKey: "CREATED_AT", reverse: true });
 
   if (products.length === 0) return null;
 

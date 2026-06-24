@@ -10,7 +10,7 @@ import Newsletter from "@/components/home/Newsletter";
 import InstagramGallery from "@/components/home/InstagramGallery";
 
 export default async function HomePage() {
-  const { products } = await getProducts({ first: 1, sortKey: "CREATED", reverse: true });
+  const { products } = await getProducts({ first: 1, sortKey: "CREATED_AT", reverse: true });
   const heroImage = products[0]?.featuredImage ?? null;
 
   return (

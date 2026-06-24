@@ -22,7 +22,6 @@ export const PRODUCT_VARIANT_FRAGMENT = /* GraphQL */ `
     id
     title
     availableForSale
-    quantityAvailable
     sku
     selectedOptions {
       name
@@ -89,7 +88,6 @@ export const PRODUCT_FULL_FRAGMENT = /* GraphQL */ `
     tags
     productType
     vendor
-    totalInventory
     createdAt
     updatedAt
     priceRange {

@@ -23,7 +23,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
 
   const filters = {
     query: q,
-    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED" | "PRICE" | "TITLE",
+    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE" | "TITLE",
     reverse,
     collectionHandle: collection,
   };

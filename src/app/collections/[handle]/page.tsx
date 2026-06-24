@@ -38,7 +38,7 @@ export default async function CollectionPage({ params, searchParams }: Collectio
 
   const filters = {
     collectionHandle: handle,
-    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED" | "PRICE" | "TITLE",
+    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE" | "TITLE",
     reverse,
   };
 

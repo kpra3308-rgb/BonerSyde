@@ -9,6 +9,6 @@ export function mapSortToShopify(sort: string | null): { sortKey: string; revers
     case "title-asc":
       return { sortKey: "TITLE", reverse: false };
     default:
-      return { sortKey: "CREATED", reverse: true };
+      return { sortKey: "CREATED_AT", reverse: true };
   }
 }

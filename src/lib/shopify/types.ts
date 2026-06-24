@@ -24,7 +24,6 @@ export type ProductVariant = {
   id: string;
   title: string;
   availableForSale: boolean;
-  quantityAvailable: number | null;
   selectedOptions: SelectedOption[];
   price: Money;
   compareAtPrice: Money | null;
@@ -131,7 +130,7 @@ export type Cart = {
 export type SortKey =
   | "RELEVANCE"
   | "BEST_SELLING"
-  | "CREATED"
+  | "CREATED_AT"
   | "PRICE"
   | "TITLE";
 

@@ -47,8 +47,6 @@ export async function shopifyFetch<TData, TVariables = Record<string, unknown>>(
     );
   }
 
-  console.log("[shopify] fetch:", endpoint, "cache:", cache, "token:", storefrontAccessToken?.slice(0, 8) + "...");
-
   const res = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -60,12 +58,9 @@ export async function shopifyFetch<TData, TVariables = Record<string, unknown>>(
     ...(tags ? { next: { tags } } : {}),
   });
 
-  console.log("[shopify] response:", res.status, res.statusText);
-
   const body = await res.json();
 
   if (!res.ok || body.errors) {
-    console.error("[shopify] API errors:", JSON.stringify(body.errors));
     throw new ShopifyApiError(
       `Shopify API request failed: ${res.status} ${res.statusText}`,
       body.errors

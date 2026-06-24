@@ -207,7 +207,11 @@ function reshapeCart(node: RawCartNode): Cart {
 export async function getProducts(
   filters: ProductFilters & { first?: number } = {}
 ): Promise<{ products: ProductCardData[]; hasNextPage: boolean; endCursor: string | null }> {
-  if (!isShopifyConfigured) return getMockProducts(filters);
+  if (!isShopifyConfigured) {
+    console.log("[shopify] Shopify not configured, using mock data");
+    return getMockProducts(filters);
+  }
+  console.log("[shopify] Shopify configured, calling API for products");
   const { first = 24, after = null, sortKey = "CREATED", reverse = true, query, collectionHandle } = filters;
 
   let searchQuery = query ?? "";

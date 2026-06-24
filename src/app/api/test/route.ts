@@ -13,13 +13,17 @@ export async function GET() {
       variables: { handle: "frank-ocean-tee" },
       cache: "no-store",
     });
-    results.shopifyFetchResult = data.product ? { handle: (data.product as Record<string, unknown>).handle, title: (data.product as Record<string, unknown>).title } : null;
+    results.shopifyFetch = data.product ? "FOUND" : "NULL";
   } catch (e: unknown) {
-    results.shopifyFetchError = {
-      message: e instanceof Error ? e.message : String(e),
-      name: e instanceof Error ? e.name : "Unknown",
-      errors: (e as Record<string, unknown>).errors || null,
-    };
+    results.shopifyFetchError = e instanceof Error ? e.message : String(e);
+  }
+
+  try {
+    const { getProductByHandle } = await import("@/lib/shopify");
+    const product = await getProductByHandle("frank-ocean-tee");
+    results.getProductByHandle = product ? "FOUND" : "NULL";
+  } catch (e: unknown) {
+    results.getProductByHandleError = e instanceof Error ? e.message : String(e);
   }
 
   return NextResponse.json(results);

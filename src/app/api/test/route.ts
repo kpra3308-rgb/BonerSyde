@@ -1,37 +1,73 @@
 import { NextResponse } from "next/server";
-import { getProductByHandle, getProducts, getCollections, getCollectionByHandle } from "@/lib/shopify";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
+  const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const version = process.env.SHOPIFY_STOREFRONT_API_VERSION || "2025-01";
+  const endpoint = `https://${domain}/api/${version}/graphql.json`;
+
+  const productQuery = `query GetProductByHandle($handle: String!) {
+    product(handle: $handle) {
+      id handle title
+    }
+  }`;
+
+  const collectionsQuery = `query GetCollectionByHandle($handle: String!) {
+    collection(handle: $handle) {
+      id handle title
+    }
+  }`;
+
   const results: Record<string, unknown> = {};
 
   try {
-    const products = await getProducts({ first: 3 });
-    results.getProducts = { count: products.products.length, handles: products.products.map((p) => p.handle) };
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": token!,
+      },
+      body: JSON.stringify({ query: productQuery, variables: { handle: "frank-ocean-tee" } }),
+      cache: "no-store",
+    });
+    const body = await res.json();
+    results.directProduct = body;
   } catch (e: unknown) {
-    results.getProducts = { error: e instanceof Error ? e.message : String(e) };
+    results.directProduct = { error: e instanceof Error ? e.message : String(e) };
   }
 
   try {
-    const product = await getProductByHandle("frank-ocean-tee");
-    results.getProductByHandle = product ? { handle: product.handle, title: product.title } : null;
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": token!,
+      },
+      body: JSON.stringify({ query: collectionsQuery, variables: { handle: "new-arrivals" } }),
+      cache: "no-store",
+    });
+    const body = await res.json();
+    results.directCollection = body;
   } catch (e: unknown) {
-    results.getProductByHandle = { error: e instanceof Error ? e.message : String(e) };
+    results.directCollection = { error: e instanceof Error ? e.message : String(e) };
   }
 
   try {
-    const collections = await getCollections(5);
-    results.getCollections = { count: collections.length, handles: collections.map((c) => c.handle) };
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": token!,
+      },
+      body: JSON.stringify({ query: `{ collections(first: 5) { nodes { id handle title } } }` }),
+      cache: "no-store",
+    });
+    const body = await res.json();
+    results.allCollections = body;
   } catch (e: unknown) {
-    results.getCollections = { error: e instanceof Error ? e.message : String(e) };
-  }
-
-  try {
-    const col = await getCollectionByHandle("new-arrivals");
-    results.getCollectionByHandle = col.collection ? { handle: col.collection.handle, title: col.collection.title } : null;
-  } catch (e: unknown) {
-    results.getCollectionByHandle = { error: e instanceof Error ? e.message : String(e) };
+    results.allCollections = { error: e instanceof Error ? e.message : String(e) };
   }
 
   return NextResponse.json(results);

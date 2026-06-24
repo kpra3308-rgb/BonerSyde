@@ -89,6 +89,7 @@ type RawCollectionNode = {
   description: string;
   descriptionHtml: string;
   image: Image | null;
+  products?: { nodes: { featuredImage: Image | null }[] };
 };
 
 type RawCollectionWithProductsNode = RawCollectionNode & {
@@ -166,13 +167,14 @@ function reshapeProduct(node: RawProductNode): Product {
 }
 
 function reshapeCollection(node: RawCollectionNode): Collection {
+  const productImage = node.products?.nodes?.[0]?.featuredImage ?? null;
   return {
     id: node.id,
     handle: node.handle,
     title: node.title,
     description: node.description,
     descriptionHtml: node.descriptionHtml,
-    image: node.image ?? null,
+    image: node.image ?? productImage,
   };
 }
 

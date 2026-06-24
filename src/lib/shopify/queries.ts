@@ -63,6 +63,16 @@ export const GET_COLLECTIONS_QUERY = /* GraphQL */ `
           width
           height
         }
+        products(first: 1) {
+          nodes {
+            featuredImage {
+              url
+              altText
+              width
+              height
+            }
+          }
+        }
       }
     }
   }

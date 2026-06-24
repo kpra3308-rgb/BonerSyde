@@ -57,6 +57,15 @@ export default async function CollectionPage({ params, searchParams }: Collectio
             priority
             className="object-cover"
           />
+        ) : collection.products.length > 0 && collection.products[0].featuredImage ? (
+          <Image
+            src={collection.products[0].featuredImage.url}
+            alt={collection.products[0].featuredImage.altText ?? collection.title}
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+          />
         ) : (
           <div className="absolute inset-0 bg-background-secondary/20" />
         )}

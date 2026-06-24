@@ -25,8 +25,8 @@ export default function ContactPage() {
             <div className="flex flex-col gap-6">
               <div>
                 <p className="eyebrow mb-2">Email</p>
-                <a href="mailto:support@bonesyde.com" className="text-foreground hover:text-accent transition-colors">
-                  support@bonesyde.com
+                <a href="mailto:support@bonesyde.in" className="text-foreground hover:text-accent transition-colors">
+                  support@bonesyde.in
                 </a>
               </div>
               <div>
@@ -36,11 +36,8 @@ export default function ContactPage() {
               <div>
                 <p className="eyebrow mb-2">Social</p>
                 <div className="flex gap-5">
-                  <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-foreground-secondary hover:text-accent transition-colors link-underline">
+                  <a href="https://www.instagram.com/bonesyde/" target="_blank" rel="noreferrer" className="text-foreground-secondary hover:text-accent transition-colors link-underline">
                     Instagram
-                  </a>
-                  <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="text-foreground-secondary hover:text-accent transition-colors link-underline">
-                    TikTok
                   </a>
                 </div>
               </div>

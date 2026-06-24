@@ -18,7 +18,7 @@ export default async function InstagramGallery() {
             <h2 className="font-display text-display-sm font-semibold text-foreground">@bonesyde</h2>
           </div>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/bonesyde/"
             target="_blank"
             rel="noreferrer"
             className="hidden sm:inline text-sm uppercase tracking-widest2 text-foreground-secondary hover:text-accent transition-colors link-underline"

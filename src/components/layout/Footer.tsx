@@ -15,8 +15,7 @@ const COMPANY_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: "Instagram", href: "https://instagram.com" },
-  { label: "TikTok", href: "https://tiktok.com" },
+  { label: "Instagram", href: "https://www.instagram.com/bonesyde/" },
   { label: "X", href: "https://x.com" },
 ];
 

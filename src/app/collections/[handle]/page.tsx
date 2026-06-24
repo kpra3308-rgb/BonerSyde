@@ -27,11 +27,11 @@ export default async function CollectionPage({ params, searchParams }: Collectio
   const { handle } = await params;
   const { sort } = await searchParams;
   const mapped = mapSortToShopify(sort ?? null);
-  const sortKey = mapped.sortKey === "CREATED_AT" ? "CREATED" : mapped.sortKey;
+  const collectionSortKey = mapped.sortKey === "CREATED_AT" ? "CREATED" : mapped.sortKey;
 
   const { collection, hasNextPage, endCursor } = await getCollectionByHandle(handle, {
     first: 24,
-    sortKey,
+    sortKey: collectionSortKey,
     reverse: mapped.reverse,
   });
 
@@ -39,8 +39,8 @@ export default async function CollectionPage({ params, searchParams }: Collectio
 
   const filters = {
     collectionHandle: handle,
-    sortKey: sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED" | "PRICE" | "TITLE",
-    reverse,
+    sortKey: mapped.sortKey as "RELEVANCE" | "BEST_SELLING" | "CREATED_AT" | "PRICE" | "TITLE",
+    reverse: mapped.reverse,
   };
 
   return (

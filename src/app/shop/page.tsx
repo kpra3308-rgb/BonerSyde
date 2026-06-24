@@ -6,6 +6,8 @@ import SortDropdown from "@/components/shop/SortDropdown";
 import Filters from "@/components/shop/Filters";
 import ShopGrid from "@/components/shop/ShopGrid";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Shop",
   description: "Shop the full BONESYDE collection.",

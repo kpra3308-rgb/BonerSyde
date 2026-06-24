@@ -64,7 +64,18 @@ export default async function BrandStory() {
               />
             </div>
           )}
-          {!imgA && !imgB && <div className="absolute inset-0 bg-background-secondary/15" />}
+          {!imgA && !imgB && (
+            <div className="absolute inset-0 overflow-hidden">
+              <Image
+                src="/brand-story.jpg"
+                alt="BONESYDE brand story"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
         </AnimatedSection>
       </div>
     </section>

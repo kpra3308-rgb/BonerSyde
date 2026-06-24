@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
 }
 
-export function formatPrice(money: Money, locale = "en-US"): string {
+export function formatPrice(money: Money, locale = "en-IN"): string {
   const amount = Number(money.amount);
   return new Intl.NumberFormat(locale, {
     style: "currency",

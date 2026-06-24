@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllProductHandles, getProductByHandle } from "@/lib/shopify";
+import { getProductByHandle } from "@/lib/shopify";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductForm from "@/components/product/ProductForm";
 import RelatedProducts from "@/components/product/RelatedProducts";
 
+export const dynamic = "force-dynamic";
+
 type ProductPageProps = {
   params: Promise<{ handle: string }>;
 };
-
-export async function generateStaticParams() {
-  const products = await getAllProductHandles();
-  return products.map((p) => ({ handle: p.handle }));
-}
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { handle } = await params;

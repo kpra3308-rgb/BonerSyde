@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getAllCollectionHandles, getCollectionByHandle } from "@/lib/shopify";
+import { getCollectionByHandle } from "@/lib/shopify";
 import ShopGrid from "@/components/shop/ShopGrid";
 import { mapSortToShopify } from "@/lib/sort";
 import SortDropdown from "@/components/shop/SortDropdown";
+
+export const dynamic = "force-dynamic";
 
 type CollectionPageProps = {
   params: Promise<{ handle: string }>;
   searchParams: Promise<{ sort?: string }>;
 };
-
-export async function generateStaticParams() {
-  const collections = await getAllCollectionHandles();
-  return collections.map((c) => ({ handle: c.handle }));
-}
 
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { handle } = await params;

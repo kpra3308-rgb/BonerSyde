@@ -121,11 +121,7 @@ export default function ProductForm({ product }: { product: Product }) {
           className={`h-2 w-2 rounded-full ${inStock ? "bg-accent" : "bg-foreground-muted"}`}
         />
         <span className="text-sm text-foreground-secondary">
-          {inStock
-            ? selectedVariant && selectedVariant.quantityAvailable !== null && selectedVariant.quantityAvailable <= 5
-              ? `Only ${selectedVariant.quantityAvailable} left`
-              : "In stock"
-            : "Sold out"}
+          {inStock ? "In stock" : "Sold out"}
         </span>
       </div>
 

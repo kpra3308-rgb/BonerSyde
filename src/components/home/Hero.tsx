@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import type { Image as ShopifyImage } from "@/lib/shopify/types";
 
-export default function Hero({ image }: { image: ShopifyImage | null }) {
+export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -15,18 +14,14 @@ export default function Hero({ image }: { image: ShopifyImage | null }) {
   return (
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-background">
       <motion.div style={{ y }} className="absolute inset-0">
-        {image ? (
-          <Image
-            src={image.url}
-            alt={image.altText ?? "BONESYDE"}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover scale-110"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-b from-background-secondary/40 via-background to-background" />
-        )}
+        <Image
+          src="/brand-story.jpg"
+          alt="BONESYDE"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover scale-110"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/40 to-background" />
       </motion.div>
 

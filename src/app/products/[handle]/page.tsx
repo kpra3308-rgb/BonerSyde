@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <span className="transition-transform duration-300 group-open:rotate-45 text-accent">+</span>
                 </summary>
                 <div
-                  className="prose-invert mt-4 text-sm leading-relaxed text-foreground-secondary [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5"
+                  className="prose-invert mt-4 text-sm leading-relaxed text-foreground-secondary [&_p]:mb-3 [&_p]:text-foreground-secondary [&_ul]:list-disc [&_ul]:pl-5 [&_li]:text-foreground-secondary [&_strong]:text-foreground-secondary [&_span]:!text-foreground-secondary [&_b]:text-foreground-secondary"
                   dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
                 />
               </details>

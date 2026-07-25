@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Dancing_Script, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import Header from "@/components/layout/Header";
@@ -25,6 +25,13 @@ const monoFont = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400", "500"],
+  display: "swap",
+});
+
+const scriptFont = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -64,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable}`}>
+    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${scriptFont.variable}`}>
       <body>
         <Loader />
         <CartProvider>

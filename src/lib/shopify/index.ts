@@ -174,7 +174,7 @@ function reshapeCollection(node: RawCollectionNode): Collection {
     title: node.title,
     description: node.description,
     descriptionHtml: node.descriptionHtml,
-    image: node.image ?? productImage,
+    image: productImage ?? node.image,
   };
 }
 

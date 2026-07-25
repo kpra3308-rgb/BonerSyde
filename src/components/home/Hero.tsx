@@ -44,9 +44,9 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="font-display text-display-xl font-bold text-foreground max-w-3xl"
         >
-          Built To
+          Not Off
           <br />
-          Outlast Trend.
+          Therack ¡!
         </motion.h1>
 
         <motion.div

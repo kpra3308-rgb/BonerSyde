@@ -25,8 +25,8 @@ export default function ContactPage() {
             <div className="flex flex-col gap-6">
               <div>
                 <p className="eyebrow mb-2">Email</p>
-                <a href="mailto:support@bonesyde.in" className="text-foreground hover:text-accent transition-colors">
-                  support@bonesyde.in
+                <a href="mailto:bonesydebackup@gmail.com" className="text-foreground hover:text-accent transition-colors">
+                  bonesydebackup@gmail.com
                 </a>
               </div>
               <div>

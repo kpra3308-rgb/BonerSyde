@@ -25,8 +25,10 @@ export default function Filters({ collections }: { collections: Collection[] }) 
       <button
         type="button"
         onClick={() => setCollection(null)}
-        className={`border px-4 py-2 text-xs uppercase tracking-widest2 transition-colors duration-300 ${
-          !active ? "border-accent text-accent" : "border-white/20 text-foreground-secondary hover:border-white/50"
+        className={`border px-5 py-2.5 text-xs font-medium uppercase tracking-widest2 transition-all duration-300 ${
+          !active
+            ? "border-accent bg-accent/10 text-accent"
+            : "border-white/15 text-foreground-secondary hover:border-white/40 hover:text-foreground"
         }`}
       >
         All
@@ -36,10 +38,10 @@ export default function Filters({ collections }: { collections: Collection[] }) 
           key={collection.id}
           type="button"
           onClick={() => setCollection(collection.handle)}
-          className={`border px-4 py-2 text-xs uppercase tracking-widest2 transition-colors duration-300 ${
+          className={`border px-5 py-2.5 text-xs font-medium uppercase tracking-widest2 transition-all duration-300 ${
             active === collection.handle
-              ? "border-accent text-accent"
-              : "border-white/20 text-foreground-secondary hover:border-white/50"
+              ? "border-accent bg-accent/10 text-accent"
+              : "border-white/15 text-foreground-secondary hover:border-white/40 hover:text-foreground"
           }`}
         >
           {collection.title}

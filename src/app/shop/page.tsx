@@ -50,6 +50,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
         </div>
 
         <ShopGrid
+          key={`${q ?? ""}-${sort ?? ""}-${collection ?? ""}`}
           initialProducts={products}
           initialHasNextPage={hasNextPage}
           initialEndCursor={endCursor}

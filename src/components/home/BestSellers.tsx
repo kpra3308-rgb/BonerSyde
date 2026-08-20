@@ -1,10 +1,19 @@
 import Link from "next/link";
-import { getProducts } from "@/lib/shopify";
-import ProductGrid from "@/components/product/ProductGrid";
+import { getProductByHandle } from "@/lib/shopify";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import FeaturedSlider from "./FeaturedSlider";
+
+const PINNED_HANDLES = [
+  "frank-ocean-tee",
+  "tyler-the-creator-tee",
+  "playboi-carti-tee",
+  "kanye-west-tee",
+];
 
 export default async function BestSellers() {
-  const { products } = await getProducts({ first: 4, sortKey: "BEST_SELLING", reverse: false });
+  const products = (
+    await Promise.all(PINNED_HANDLES.map((handle) => getProductByHandle(handle)))
+  ).filter(Boolean);
 
   if (products.length === 0) return null;
 
@@ -21,14 +30,14 @@ export default async function BestSellers() {
           </h2>
         </div>
         <Link
-          href="/shop?sort=best-selling"
+          href="/shop"
           className="hidden sm:inline text-sm uppercase tracking-widest2 text-foreground-secondary hover:text-accent transition-colors link-underline"
         >
           Shop All
         </Link>
       </div>
 
-      <ProductGrid products={products} />
+      <FeaturedSlider products={products} />
     </AnimatedSection>
   );
 }

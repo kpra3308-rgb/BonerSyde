@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Bricolage_Grotesque, Dancing_Script, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
@@ -6,8 +7,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import Loader from "@/components/ui/Loader";
-import ScrollToTop from "@/components/ui/ScrollToTop";
-import ScrollToTop from "@/components/ui/ScrollToTop";
 
 const displayFont = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -74,12 +73,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${scriptFont.variable}`}>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: "window.history.scrollRestoration='manual';window.scrollTo(0,0);" }} />
-      </head>
       <body>
+        <Script id="scroll-reset" strategy="beforeInteractive">
+          {`window.history.scrollRestoration='manual';window.scrollTo(0,0);`}
+        </Script>
         <Loader />
-        <ScrollToTop />
         <CartProvider>
           <Header />
           <main>{children}</main>

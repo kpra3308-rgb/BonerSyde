@@ -20,6 +20,7 @@ export default function DragScroll({ children, className }: Props) {
 
   function onPointerDown(e: React.PointerEvent) {
     if (!ref.current) return;
+    e.preventDefault();
     isDragging.current = true;
     didDrag.current = false;
     startX.current = e.pageX;
@@ -78,7 +79,7 @@ export default function DragScroll({ children, className }: Props) {
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
       onClick={onClick}
-      className={className}
+      className={`${className} drag-scroll`}
       style={{ cursor: "grab", touchAction: "pan-y" }}
     >
       {children}

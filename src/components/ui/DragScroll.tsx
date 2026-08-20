@@ -10,6 +10,7 @@ type Props = {
 export default function DragScroll({ children, className }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+  const didDrag = useRef(false);
   const startX = useRef(0);
   const scrollLeftRef = useRef(0);
   const velocity = useRef(0);
@@ -20,6 +21,7 @@ export default function DragScroll({ children, className }: Props) {
   function onPointerDown(e: React.PointerEvent) {
     if (!ref.current) return;
     isDragging.current = true;
+    didDrag.current = false;
     startX.current = e.pageX;
     scrollLeftRef.current = ref.current.scrollLeft;
     lastX.current = e.pageX;
@@ -33,6 +35,8 @@ export default function DragScroll({ children, className }: Props) {
   function onPointerMove(e: React.PointerEvent) {
     if (!isDragging.current || !ref.current) return;
     const x = e.pageX;
+    const dx = Math.abs(x - startX.current);
+    if (dx > 5) didDrag.current = true;
     const now = Date.now();
     const dt = now - lastTime.current;
     if (dt > 0) {
@@ -59,6 +63,13 @@ export default function DragScroll({ children, className }: Props) {
     step();
   }
 
+  function onClick(e: React.MouseEvent) {
+    if (didDrag.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
   return (
     <div
       ref={ref}
@@ -66,6 +77,7 @@ export default function DragScroll({ children, className }: Props) {
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
+      onClick={onClick}
       className={className}
       style={{ cursor: "grab", touchAction: "pan-y" }}
     >

@@ -44,7 +44,7 @@ export default function Header() {
             href="/"
             className="font-article text-lg sm:text-xl font-bold tracking-widest2 text-foreground"
           >
-            BONESYDE
+            Bonesyde
           </Link>
 
           <nav className="hidden lg:flex items-center gap-10">

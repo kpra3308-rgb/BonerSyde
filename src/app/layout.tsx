@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import Loader from "@/components/ui/Loader";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 const displayFont = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -74,11 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${scriptFont.variable}`}>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.history.scrollRestoration = 'manual'; window.scrollTo(0, 0);`,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: "window.history.scrollRestoration='manual'" }} />
       </head>
       <body>
         <Loader />

@@ -55,10 +55,10 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className="mt-9 flex flex-wrap items-center gap-5"
         >
-          <Link href="/shop" className="btn-primary font-article">
+          <Link href="/shop" className="btn-primary font-article !normal-case !tracking-normal">
             Shop The Collection
           </Link>
-          <Link href="/collections" className="text-sm uppercase tracking-widest2 text-foreground-secondary hover:text-accent transition-colors link-underline font-article">
+          <Link href="/collections" className="text-sm tracking-widest2 text-foreground-secondary hover:text-accent transition-colors link-underline font-article !normal-case !tracking-normal">
             Explore Collections
           </Link>
         </motion.div>

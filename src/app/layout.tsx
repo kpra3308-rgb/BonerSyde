@@ -40,8 +40,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.bonesyde.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "BONESYDE — Premium Streetwear",
-    template: "%s — BONESYDE",
+    default: "Bonesyde",
+    template: "%s — Bonesyde",
   },
   description:
     "BONESYDE is a luxury streetwear label built on precision construction, considered silhouettes, and uncompromising quality.",
@@ -49,13 +49,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "BONESYDE",
-    title: "BONESYDE — Premium Streetwear",
+    title: "Bonesyde",
     description:
       "BONESYDE is a luxury streetwear label built on precision construction, considered silhouettes, and uncompromising quality.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BONESYDE — Premium Streetwear",
+    title: "Bonesyde",
   },
 };
 

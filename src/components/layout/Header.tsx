@@ -42,7 +42,7 @@ export default function Header() {
         <div className="container-px max-w-container mx-auto flex items-center justify-between h-[76px]">
           <Link
             href="/"
-            className="font-display text-lg sm:text-xl font-bold tracking-widest2 text-foreground"
+            className="font-article text-lg sm:text-xl font-bold tracking-widest2 text-foreground"
           >
             BONESYDE
           </Link>

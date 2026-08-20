@@ -29,25 +29,26 @@ export default function FeaturedSlider({ products }: Props) {
     return () => window.removeEventListener("resize", updateVisibleCount);
   }, [updateVisibleCount]);
 
-  const hasInteracted = useRef(false);
-
-  useEffect(() => {
-    if (!hasInteracted.current) return;
-    if (!scrollRef.current) return;
-    const card = scrollRef.current.children[current] as HTMLElement;
-    if (card) {
-      card.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-    }
-  }, [current]);
-
   function prev() {
-    hasInteracted.current = true;
-    setCurrent((i) => Math.max(0, i - 1));
+    setCurrent((i) => {
+      const next = Math.max(0, i - 1);
+      if (scrollRef.current) {
+        const card = scrollRef.current.children[next] as HTMLElement;
+        card?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+      }
+      return next;
+    });
   }
 
   function next() {
-    hasInteracted.current = true;
-    setCurrent((i) => Math.min(maxIndex, i + 1));
+    setCurrent((i) => {
+      const next = Math.min(maxIndex, i + 1);
+      if (scrollRef.current) {
+        const card = scrollRef.current.children[next] as HTMLElement;
+        card?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+      }
+      return next;
+    });
   }
 
   return (

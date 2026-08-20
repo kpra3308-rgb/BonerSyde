@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${scriptFont.variable}`}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "window.history.scrollRestoration='manual'" }} />
+        <script dangerouslySetInnerHTML={{ __html: "window.history.scrollRestoration='manual';window.scrollTo(0,0);" }} />
       </head>
       <body>
         <Loader />

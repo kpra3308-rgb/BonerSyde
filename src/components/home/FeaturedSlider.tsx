@@ -29,7 +29,10 @@ export default function FeaturedSlider({ products }: Props) {
     return () => window.removeEventListener("resize", updateVisibleCount);
   }, [updateVisibleCount]);
 
+  const hasInteracted = useRef(false);
+
   useEffect(() => {
+    if (!hasInteracted.current) return;
     if (!scrollRef.current) return;
     const card = scrollRef.current.children[current] as HTMLElement;
     if (card) {
@@ -38,10 +41,12 @@ export default function FeaturedSlider({ products }: Props) {
   }, [current]);
 
   function prev() {
+    hasInteracted.current = true;
     setCurrent((i) => Math.max(0, i - 1));
   }
 
   function next() {
+    hasInteracted.current = true;
     setCurrent((i) => Math.min(maxIndex, i + 1));
   }
 

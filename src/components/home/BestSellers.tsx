@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getProductByHandle } from "@/lib/shopify";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import FeaturedSlider from "./FeaturedSlider";
+import type { ProductCardData } from "@/lib/shopify/types";
 
 const PINNED_HANDLES = [
   "frank-ocean-tee",
@@ -11,9 +12,20 @@ const PINNED_HANDLES = [
 ];
 
 export default async function BestSellers() {
-  const products = (
-    await Promise.all(PINNED_HANDLES.map((handle) => getProductByHandle(handle)))
-  ).filter(Boolean);
+  const results = await Promise.all(PINNED_HANDLES.map((handle) => getProductByHandle(handle)));
+  const products: ProductCardData[] = results
+    .filter((p): p is NonNullable<typeof p> => p !== null)
+    .map((p) => ({
+      id: p.id,
+      handle: p.handle,
+      title: p.title,
+      availableForSale: p.availableForSale,
+      featuredImage: p.images[0] ?? null,
+      hoverImage: p.images[1] ?? null,
+      priceRange: p.priceRange,
+      compareAtPriceRange: p.compareAtPriceRange,
+      tags: p.tags,
+    }));
 
   if (products.length === 0) return null;
 

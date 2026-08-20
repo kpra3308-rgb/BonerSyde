@@ -1,37 +1,39 @@
 import Link from "next/link";
-import { getProducts } from "@/lib/shopify";
-import ProductCard from "@/components/product/ProductCard";
+import { getProducts, getProductByHandle } from "@/lib/shopify";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import FeaturedSlider from "./FeaturedSlider";
 
 export default async function NewArrivals() {
-  const { products } = await getProducts({ first: 8, sortKey: "CREATED_AT", reverse: true });
+  const pinnedHandles = ["frank-ocean-tee", "tyler-the-creator-tee"];
 
-  if (products.length === 0) return null;
+  const [newProductsResult, ...pinnedProducts] = await Promise.all([
+    getProducts({ first: 2, sortKey: "CREATED_AT", reverse: true }),
+    ...pinnedHandles.map((handle) => getProductByHandle(handle)),
+  ]);
+
+  const pinned = pinnedProducts.filter(Boolean);
+  const allProducts = [...pinned, ...newProductsResult.products];
+
+  if (allProducts.length === 0) return null;
 
   return (
     <AnimatedSection as="section" className="container-px max-w-container mx-auto py-24">
       <div className="mb-10 flex items-end justify-between">
         <div>
-          <p className="eyebrow mb-3">Just Landed</p>
+          <p className="eyebrow mb-3">Curated Picks</p>
           <h2 className="font-display text-display-sm font-semibold text-foreground">
-            New Arrivals
+            Staff Favorites
           </h2>
         </div>
         <Link
-          href="/shop?sort=newest"
+          href="/shop"
           className="hidden sm:inline text-sm uppercase tracking-widest2 text-foreground-secondary hover:text-accent transition-colors link-underline"
         >
           Shop All
         </Link>
       </div>
 
-      <div className="-mx-5 sm:-mx-8 lg:-mx-12 flex gap-4 sm:gap-6 overflow-x-auto px-5 sm:px-8 lg:px-12 pb-2 snap-x snap-mandatory scrollbar-none">
-        {products.map((product) => (
-          <div key={product.id} className="w-[58%] sm:w-[32%] lg:w-[23%] shrink-0 snap-start">
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </div>
+      <FeaturedSlider products={allProducts} />
     </AnimatedSection>
   );
 }

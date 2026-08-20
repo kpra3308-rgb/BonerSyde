@@ -14,6 +14,7 @@ export default function DragScroll({ children, className }: Props) {
   const startX = useRef(0);
   const scrollLeftRef = useRef(0);
   const velocity = useRef(0);
+  const velocities = useRef<number[]>([]);
   const lastX = useRef(0);
   const lastTime = useRef(0);
   const rafId = useRef<number>(0);
@@ -28,6 +29,7 @@ export default function DragScroll({ children, className }: Props) {
     lastX.current = e.pageX;
     lastTime.current = Date.now();
     velocity.current = 0;
+    velocities.current = [];
     cancelAnimationFrame(rafId.current);
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     ref.current.style.cursor = "grabbing";
@@ -42,7 +44,9 @@ export default function DragScroll({ children, className }: Props) {
     const dt = now - lastTime.current;
     if (dt > 0) {
       const v = (lastX.current - x) / dt;
-      velocity.current = velocity.current * 0.7 + v * 0.3;
+      velocities.current.push(v);
+      if (velocities.current.length > 6) velocities.current.shift();
+      velocity.current = velocities.current.reduce((a, b) => a + b, 0) / velocities.current.length;
     }
     lastX.current = x;
     lastTime.current = now;
@@ -54,12 +58,12 @@ export default function DragScroll({ children, className }: Props) {
     isDragging.current = false;
     ref.current.style.cursor = "grab";
 
-    let v = velocity.current * 120;
+    let v = velocity.current * 150;
 
     function step() {
-      if (!ref.current || Math.abs(v) < 0.2) return;
+      if (!ref.current || Math.abs(v) < 0.1) return;
       ref.current.scrollLeft += v;
-      v *= 0.97;
+      v *= 0.98;
       rafId.current = requestAnimationFrame(step);
     }
     step();

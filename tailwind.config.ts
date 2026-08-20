@@ -19,6 +19,7 @@ const config: Config = {
         body: ["var(--font-body)", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
         script: ["var(--font-script)", "cursive"],
+        article: ["Article Premier", "cursive"],
       },
       fontSize: {
         "display-xl": ["clamp(3.5rem, 9vw, 8.5rem)", { lineHeight: "0.95", letterSpacing: "-0.02em" }],

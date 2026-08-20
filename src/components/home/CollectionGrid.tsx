@@ -32,7 +32,7 @@ export default async function CollectionGrid() {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
             <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-              <h3 className="font-script text-3xl sm:text-4xl lg:text-5xl text-white drop-shadow-lg">
+              <h3 className="font-article text-3xl sm:text-4xl lg:text-5xl text-white drop-shadow-lg">
                 {collection.title}
               </h3>
             </div>

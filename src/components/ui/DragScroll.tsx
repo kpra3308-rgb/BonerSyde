@@ -37,11 +37,12 @@ export default function DragScroll({ children, className }: Props) {
     if (!isDragging.current || !ref.current) return;
     const x = e.pageX;
     const dx = Math.abs(x - startX.current);
-    if (dx > 5) didDrag.current = true;
+    if (dx > 3) didDrag.current = true;
     const now = Date.now();
     const dt = now - lastTime.current;
     if (dt > 0) {
-      velocity.current = (lastX.current - x) / dt;
+      const v = (lastX.current - x) / dt;
+      velocity.current = velocity.current * 0.7 + v * 0.3;
     }
     lastX.current = x;
     lastTime.current = now;
@@ -53,12 +54,12 @@ export default function DragScroll({ children, className }: Props) {
     isDragging.current = false;
     ref.current.style.cursor = "grab";
 
-    let v = velocity.current * 100;
+    let v = velocity.current * 120;
 
     function step() {
-      if (!ref.current || Math.abs(v) < 0.3) return;
+      if (!ref.current || Math.abs(v) < 0.2) return;
       ref.current.scrollLeft += v;
-      v *= 0.96;
+      v *= 0.97;
       rafId.current = requestAnimationFrame(step);
     }
     step();

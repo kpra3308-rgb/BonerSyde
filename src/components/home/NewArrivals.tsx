@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getProducts } from "@/lib/shopify";
 import ProductCard from "@/components/product/ProductCard";
 import AnimatedSection from "@/components/ui/AnimatedSection";
+import DragScroll from "@/components/ui/DragScroll";
 
 export default async function NewArrivals() {
   const { products } = await getProducts({ first: 8, sortKey: "CREATED_AT", reverse: true });
@@ -25,13 +26,13 @@ export default async function NewArrivals() {
         </Link>
       </div>
 
-      <div className="-mx-5 sm:-mx-8 lg:-mx-12 flex gap-4 sm:gap-6 overflow-x-auto px-5 sm:px-8 lg:px-12 pb-2 snap-x snap-mandatory scrollbar-none">
+      <DragScroll className="-mx-5 sm:-mx-8 lg:-mx-12 flex gap-4 sm:gap-6 overflow-x-auto px-5 sm:px-8 lg:px-12 pb-2 snap-x snap-mandatory scrollbar-none">
         {products.map((product) => (
           <div key={product.id} className="w-[58%] sm:w-[32%] lg:w-[23%] shrink-0 snap-start">
             <ProductCard product={product} />
           </div>
         ))}
-      </div>
+      </DragScroll>
     </AnimatedSection>
   );
 }

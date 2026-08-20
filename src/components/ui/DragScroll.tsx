@@ -64,10 +64,11 @@ export default function DragScroll({ children, className }: Props) {
     step();
   }
 
-  function onClick(e: React.MouseEvent) {
+  function onClickCapture(e: React.MouseEvent) {
     if (didDrag.current) {
       e.preventDefault();
       e.stopPropagation();
+      didDrag.current = false;
     }
   }
 
@@ -78,7 +79,7 @@ export default function DragScroll({ children, className }: Props) {
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
-      onClick={onClick}
+      onClickCapture={onClickCapture}
       className={`${className} drag-scroll`}
       style={{ cursor: "grab", touchAction: "pan-y" }}
     >

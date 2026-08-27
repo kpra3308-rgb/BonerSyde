@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getProducts } from "@/lib/shopify";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
 export const metadata: Metadata = {
@@ -25,24 +24,17 @@ const VALUES = [
 ];
 
 export default async function AboutPage() {
-  const { products } = await getProducts({ first: 3 });
-  const heroImage = products[0]?.featuredImage;
-
   return (
     <div className="pb-24">
       <div className="relative h-[70vh] min-h-[420px] w-full overflow-hidden mt-[76px]">
-        {heroImage ? (
-          <Image
-            src={heroImage.url}
-            alt={heroImage.altText ?? "BONESYDE"}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-background-secondary/20" />
-        )}
+        <Image
+          src="/brand-story.jpg"
+          alt="BONESYDE"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 container-px max-w-container mx-auto pb-12">
           <p className="eyebrow mb-4">Our Story</p>
@@ -74,24 +66,6 @@ export default async function AboutPage() {
             </AnimatedSection>
           ))}
         </div>
-
-        {products.length > 1 && (
-          <AnimatedSection className="grid grid-cols-2 gap-4 sm:gap-6 mb-24">
-            {products.slice(1, 3).map((product) =>
-              product.featuredImage ? (
-                <div key={product.id} className="relative aspect-[4/5] overflow-hidden">
-                  <Image
-                    src={product.featuredImage.url}
-                    alt={product.featuredImage.altText ?? product.title}
-                    fill
-                    sizes="50vw"
-                    className="object-cover"
-                  />
-                </div>
-              ) : null
-            )}
-          </AnimatedSection>
-        )}
 
         <AnimatedSection className="text-center">
           <h2 className="font-display text-display-sm font-semibold text-foreground mb-6">

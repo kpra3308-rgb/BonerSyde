@@ -13,8 +13,6 @@ export default function DragScroll({ children, className }: Props) {
   const didDrag = useRef(false);
   const startX = useRef(0);
   const scrollLeftRef = useRef(0);
-  const lastX = useRef(0);
-  const lastTime = useRef(0);
   const samples = useRef<{ x: number; t: number }[]>([]);
   const rafId = useRef<number>(0);
 
@@ -32,10 +30,8 @@ export default function DragScroll({ children, className }: Props) {
         if (!ref.current) return;
         const dt = (timestamp - lastTimestamp) / 1000;
         lastTimestamp = timestamp;
-
         ref.current.scrollLeft += v * dt * 60;
-        v *= 0.94;
-
+        v *= 0.95;
         if (Math.abs(v) > 0.05) {
           rafId.current = requestAnimationFrame(step);
         }
@@ -54,10 +50,9 @@ export default function DragScroll({ children, className }: Props) {
     didDrag.current = false;
     startX.current = e.pageX;
     scrollLeftRef.current = ref.current.scrollLeft;
-    lastX.current = e.pageX;
-    lastTime.current = Date.now();
     samples.current = [{ x: e.pageX, t: Date.now() }];
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    ref.current.style.scrollSnapType = "none";
     ref.current.style.cursor = "grabbing";
   }
 
@@ -66,19 +61,16 @@ export default function DragScroll({ children, className }: Props) {
     const x = e.pageX;
     const now = Date.now();
     if (Math.abs(x - startX.current) > 3) didDrag.current = true;
-
     samples.current.push({ x, t: now });
     if (samples.current.length > 8) samples.current.shift();
-
     ref.current.scrollLeft = scrollLeftRef.current - (x - startX.current);
-    lastX.current = x;
-    lastTime.current = now;
   }
 
   function onPointerUp() {
     if (!ref.current) return;
     isDragging.current = false;
     ref.current.style.cursor = "grab";
+    ref.current.style.scrollSnapType = "";
 
     const s = samples.current;
     if (s.length >= 2) {
@@ -86,8 +78,7 @@ export default function DragScroll({ children, className }: Props) {
       const dx = recent[0].x - recent[recent.length - 1].x;
       const dt = (recent[recent.length - 1].t - recent[0].t) / 1000;
       if (dt > 0) {
-        const velocity = (dx / dt) * 0.3;
-        startMomentum(velocity);
+        startMomentum((dx / dt) * 0.3);
       }
     }
   }

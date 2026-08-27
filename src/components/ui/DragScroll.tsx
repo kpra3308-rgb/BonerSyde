@@ -11,8 +11,7 @@ export default function DragScroll({ children, className }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const didDrag = useRef(false);
-  const startX = useRef(0);
-  const scrollLeftRef = useRef(0);
+  const targetScroll = useRef(0);
   const samples = useRef<{ x: number; t: number }[]>([]);
   const rafId = useRef<number>(0);
 
@@ -25,13 +24,15 @@ export default function DragScroll({ children, className }: Props) {
       cancelMomentum();
       let v = initialVelocity;
       let lastTimestamp = performance.now();
+      let current = ref.current?.scrollLeft ?? 0;
 
       function step(timestamp: number) {
         if (!ref.current) return;
-        const dt = (timestamp - lastTimestamp) / 1000;
+        const dt = Math.min((timestamp - lastTimestamp) / 1000, 0.05);
         lastTimestamp = timestamp;
-        ref.current.scrollLeft += v * dt * 60;
-        v *= 0.95;
+        v *= Math.pow(0.95, dt * 60);
+        current += v * dt * 60;
+        ref.current.scrollLeft = current;
         if (Math.abs(v) > 0.05) {
           rafId.current = requestAnimationFrame(step);
         }
@@ -48,8 +49,7 @@ export default function DragScroll({ children, className }: Props) {
     cancelMomentum();
     isDragging.current = true;
     didDrag.current = false;
-    startX.current = e.pageX;
-    scrollLeftRef.current = ref.current.scrollLeft;
+    targetScroll.current = ref.current.scrollLeft;
     samples.current = [{ x: e.pageX, t: Date.now() }];
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     ref.current.style.scrollSnapType = "none";
@@ -60,10 +60,11 @@ export default function DragScroll({ children, className }: Props) {
     if (!isDragging.current || !ref.current) return;
     const x = e.pageX;
     const now = Date.now();
-    if (Math.abs(x - startX.current) > 3) didDrag.current = true;
+    if (Math.abs(x - samples.current[0].x) > 3) didDrag.current = true;
     samples.current.push({ x, t: now });
-    if (samples.current.length > 8) samples.current.shift();
-    ref.current.scrollLeft = scrollLeftRef.current - (x - startX.current);
+    if (samples.current.length > 10) samples.current.shift();
+    const dx = x - samples.current[0].x;
+    ref.current.scrollLeft = targetScroll.current - dx;
   }
 
   function onPointerUp() {
@@ -74,11 +75,11 @@ export default function DragScroll({ children, className }: Props) {
 
     const s = samples.current;
     if (s.length >= 2) {
-      const recent = s.slice(-4);
+      const recent = s.slice(-5);
       const dx = recent[0].x - recent[recent.length - 1].x;
       const dt = (recent[recent.length - 1].t - recent[0].t) / 1000;
       if (dt > 0) {
-        startMomentum((dx / dt) * 0.3);
+        startMomentum((dx / dt) * 0.4);
       }
     }
   }
@@ -100,7 +101,7 @@ export default function DragScroll({ children, className }: Props) {
       onPointerCancel={onPointerUp}
       onClickCapture={onClickCapture}
       className={`${className} drag-scroll`}
-      style={{ cursor: "grab", touchAction: "pan-y" }}
+      style={{ cursor: "grab", touchAction: "pan-y", willChange: "scroll-position" }}
     >
       {children}
     </div>

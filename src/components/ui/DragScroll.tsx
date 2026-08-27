@@ -19,12 +19,18 @@ export default function DragScroll({ children, className }: Props) {
     cancelAnimationFrame(rafId.current);
   }, []);
 
+  const getMaxScroll = useCallback(() => {
+    if (!ref.current) return 0;
+    return ref.current.scrollWidth - ref.current.clientWidth;
+  }, []);
+
   const startMomentum = useCallback(
     (initialVelocity: number) => {
       cancelMomentum();
       let v = initialVelocity;
       let lastTimestamp = performance.now();
       let current = ref.current?.scrollLeft ?? 0;
+      const max = getMaxScroll();
 
       function step(timestamp: number) {
         if (!ref.current) return;
@@ -32,6 +38,7 @@ export default function DragScroll({ children, className }: Props) {
         lastTimestamp = timestamp;
         v *= Math.pow(0.95, dt * 60);
         current += v * dt * 60;
+        current = Math.max(0, Math.min(current, max));
         ref.current.scrollLeft = current;
         if (Math.abs(v) > 0.05) {
           rafId.current = requestAnimationFrame(step);
@@ -40,7 +47,7 @@ export default function DragScroll({ children, className }: Props) {
 
       rafId.current = requestAnimationFrame(step);
     },
-    [cancelMomentum],
+    [cancelMomentum, getMaxScroll],
   );
 
   function onPointerDown(e: React.PointerEvent) {
@@ -63,8 +70,11 @@ export default function DragScroll({ children, className }: Props) {
     if (Math.abs(x - samples.current[0].x) > 3) didDrag.current = true;
     samples.current.push({ x, t: now });
     if (samples.current.length > 10) samples.current.shift();
-    const dx = x - samples.current[0].x;
-    ref.current.scrollLeft = targetScroll.current - dx;
+    const max = getMaxScroll();
+    let newScroll = targetScroll.current - (x - samples.current[0].x);
+    if (newScroll < 0) newScroll = newScroll * 0.3;
+    else if (newScroll > max) newScroll = max + (newScroll - max) * 0.3;
+    ref.current.scrollLeft = newScroll;
   }
 
   function onPointerUp() {

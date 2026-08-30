@@ -21,7 +21,7 @@ export default async function CollectionGrid() {
             href={`/collections/${collection.handle}`}
             className="group relative aspect-[3/4] overflow-hidden bg-background-secondary/10"
           >
-            {collection.handle === "oversized-tees" ? (
+            {collection.title.toLowerCase().includes("oversized") ? (
               <img
                 src="/hero.jpg"
                 alt={collection.title}

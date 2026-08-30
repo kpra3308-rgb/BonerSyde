@@ -47,7 +47,7 @@ export default function Header() {
             bannerHidden ? "-translate-y-full" : "translate-y-0"
           }`}
         >
-          <span>Use Code &quot;SIXTWOSIX&quot; for 5% off</span>
+          <span>Use Code &quot;TWOSIXTWO&quot; for 5% off</span>
           <button
             type="button"
             onClick={() => setBannerVisible(false)}

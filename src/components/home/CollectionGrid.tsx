@@ -21,7 +21,13 @@ export default async function CollectionGrid() {
             href={`/collections/${collection.handle}`}
             className="group relative aspect-[3/4] overflow-hidden bg-background-secondary/10"
           >
-            {collection.image && (
+            {collection.handle === "oversized-tees" ? (
+              <img
+                src="/hero.jpg"
+                alt={collection.title}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-premium group-hover:scale-105"
+              />
+            ) : collection.image && (
               <Image
                 src={collection.image.url}
                 alt={collection.image.altText ?? collection.title}

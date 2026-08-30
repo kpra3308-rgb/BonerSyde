@@ -8,7 +8,7 @@ const DEFAULT_ITEMS = [
   "Waffle knits",
   "Acrylic posters",
   "Not off the rack¡!",
-  "PREMIUM STREETWEAR",
+  "premium streetwear",
 ];
 
 export default function Marquee({ items = DEFAULT_ITEMS }: { items?: string[] }) {

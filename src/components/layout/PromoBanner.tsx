@@ -29,7 +29,7 @@ export default function PromoBanner() {
         hidden ? "-translate-y-full" : "translate-y-0"
       }`}
     >
-      <span>Use Code "SIXTWOSIX" for 5% off</span>
+      <span>Use Code &quot;SIXTWOSIX&quot; for 5% off</span>
       <button
         type="button"
         onClick={() => setVisible(false)}

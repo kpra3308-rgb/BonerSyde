@@ -15,7 +15,7 @@ export default function Hero() {
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-background">
       <motion.div style={{ y }} className="absolute inset-0">
         <Image
-          src="/hero.jpg"
+          src="/brand-story.jpg"
           alt="BONESYDE"
           fill
           priority

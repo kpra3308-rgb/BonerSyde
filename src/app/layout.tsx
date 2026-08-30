@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import Loader from "@/components/ui/Loader";
+import PromoBanner from "@/components/layout/PromoBanner";
 
 const displayFont = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -79,6 +80,7 @@ export default function RootLayout({
         </Script>
         <Loader />
         <CartProvider>
+          <PromoBanner />
           <Header />
           <main>{children}</main>
           <Footer />

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import MobileMenu from "@/components/layout/MobileMenu";
@@ -16,10 +16,22 @@ const NAV_LINKS = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(true);
+  const [bannerHidden, setBannerHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const { cart, openCart } = useCart();
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 24);
+      const y = window.scrollY;
+      if (y > lastScrollY.current && y > 40) {
+        setBannerHidden(true);
+      } else {
+        setBannerHidden(false);
+      }
+      lastScrollY.current = y;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,11 +41,31 @@ export default function Header() {
 
   return (
     <>
+      {bannerVisible && (
+        <div
+          className={`fixed top-0 left-0 right-0 z-[60] bg-[#00D26A] text-white text-center py-2.5 px-4 text-sm font-medium tracking-wide transition-transform duration-300 ease-in-out ${
+            bannerHidden ? "-translate-y-full" : "translate-y-0"
+          }`}
+        >
+          <span>Use Code &quot;SIXTWOSIX&quot; for 5% off</span>
+          <button
+            type="button"
+            onClick={() => setBannerVisible(false)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+            aria-label="Close banner"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-premium ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-premium ${
+          bannerVisible && !bannerHidden ? "top-[40px]" : "top-0"
+        } ${
           isScrolled
             ? "bg-background/85 backdrop-blur-md border-b border-line"
             : "bg-transparent border-b border-transparent"

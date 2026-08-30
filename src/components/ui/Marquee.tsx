@@ -4,11 +4,12 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const DEFAULT_ITEMS = [
-  "Hip hop tees",
-  "Waffle knits",
-  "Acrylic posters",
-  "Not off the rack¡!",
-  "premium streetwear",
+  "HIP HOP TEES",
+  "WAFFLE KNITS",
+  "ACRYLIC POSTERS",
+  "NOT OFF THE RACK¡!",
+  "PREMIUM STREETWEAR",
+  "WALL DECOR",
 ];
 
 export default function Marquee({ items = DEFAULT_ITEMS }: { items?: string[] }) {
@@ -41,7 +42,7 @@ export default function Marquee({ items = DEFAULT_ITEMS }: { items?: string[] })
         {[...items, ...items].map((item, i) => (
           <span
             key={i}
-            className="flex items-center gap-10 text-xs tracking-widest2 text-foreground-secondary whitespace-nowrap"
+            className="flex items-center gap-10 text-xs uppercase tracking-widest2 text-foreground-secondary whitespace-nowrap"
           >
             {item}
             <span className="text-accent">/</span>

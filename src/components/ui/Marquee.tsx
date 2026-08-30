@@ -4,11 +4,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const DEFAULT_ITEMS = [
+  "Hip hop tees",
+  "Waffle knits",
+  "Acrylic posters",
+  "Not off the rack¡!",
   "PREMIUM STREETWEAR",
-  "BUILT TO OUTLAST TREND",
-  "SMALL BATCH PRODUCTION",
-  "POP-CULTURE STARTS HERE",
-  "NEW DROPS WEEKLY",
 ];
 
 export default function Marquee({ items = DEFAULT_ITEMS }: { items?: string[] }) {

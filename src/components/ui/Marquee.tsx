@@ -41,7 +41,7 @@ export default function Marquee({ items = DEFAULT_ITEMS }: { items?: string[] })
         {[...items, ...items].map((item, i) => (
           <span
             key={i}
-            className="flex items-center gap-10 text-xs uppercase tracking-widest2 text-foreground-secondary whitespace-nowrap"
+            className="flex items-center gap-10 text-xs tracking-widest2 text-foreground-secondary whitespace-nowrap"
           >
             {item}
             <span className="text-accent">/</span>

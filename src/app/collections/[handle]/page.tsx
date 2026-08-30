@@ -46,27 +46,11 @@ export default async function CollectionPage({ params, searchParams }: Collectio
   return (
     <div className="pb-24">
       <div className="relative h-[55vh] min-h-[360px] w-full overflow-hidden mt-[76px]">
-        {collection.image ? (
-          <Image
-            src={collection.image.url}
-            alt={collection.image.altText ?? collection.title}
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-        ) : collection.products.length > 0 && collection.products[0].featuredImage ? (
-          <Image
-            src={collection.products[0].featuredImage.url}
-            alt={collection.products[0].featuredImage.altText ?? collection.title}
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-background-secondary/20" />
-        )}
+        <img
+          src="/hero.jpg"
+          alt={collection.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 container-px max-w-container mx-auto pb-10">
           <p className="eyebrow mb-3">Collection</p>

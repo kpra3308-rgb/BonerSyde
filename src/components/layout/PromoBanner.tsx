@@ -8,7 +8,7 @@ export default function PromoBanner() {
   if (!visible) return null;
 
   return (
-    <div className="relative z-[60] bg-[#E91E8C] text-white text-center py-2.5 px-4 text-sm font-medium tracking-wide">
+    <div className="relative z-[60] bg-[#00D26A] text-white text-center py-2.5 px-4 text-sm font-medium tracking-wide">
       <span>Use Code "SIXTWOSIX" for 5% off</span>
       <button
         type="button"
